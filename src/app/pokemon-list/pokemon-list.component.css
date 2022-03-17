@@ -1,0 +1,5 @@
+.btn-outline-success.disabled, .btn-outline-success:disabled {
+    background: #f0f0f0;
+    color: #000;
+    border-color: silver;
+}

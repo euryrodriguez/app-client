@@ -12,6 +12,7 @@ export class PokemonService {
   constructor(private http: HttpClient) { }
 
   getPokemons(limit:number, offset: number):Observable<Array<Pokemon>>{
+    console.log(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
     return this.http.get<Pokemon[]>(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
   }
 
