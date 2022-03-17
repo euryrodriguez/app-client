@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.box{
+    height: 165px;
+}
+
+.img-container{
+    text-align: center;
+}
+
+.img-container img{
+    object-fit: cover;
+}
