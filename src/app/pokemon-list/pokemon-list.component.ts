@@ -51,16 +51,15 @@ export class PokemonListComponent implements OnInit {
       item[nameAttr] = pokemon;
       favorites.push(item);
       sessionStorage.setItem('favorites', JSON.stringify(favorites));
-      Swal.fire(`Operacion Completada!`, `El pokemon ${nameAttr} ha sido agregado a favoritos.`, 'success');
     }else{
       let arrayOfFavorites = JSON.parse(favorites);
       let item:any = {};
       item[nameAttr] = pokemon;
       arrayOfFavorites.push(item);
       sessionStorage.setItem('favorites', JSON.stringify(arrayOfFavorites));
-      Swal.fire(`Operacion Completada!`, `El pokemon ${nameAttr} ha sido agregado a favoritos.`, 'success');
     }
     target.disabled= true;
+    Swal.fire(`Operacion Completada!`, `El pokemon ${nameAttr} ha sido agregado a favoritos.`, 'success');
   }
   ifPokemonNotExistInFavorites(name:string){
     let exists = false;
