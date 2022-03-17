@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { PokemonService } from './services/pokemon.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonListComponent,
-    FavoriteListComponent
+    FavoriteListComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
