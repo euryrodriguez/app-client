@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { FavoriteListComponent } from './favorite-list/favorite-list.component';
 import { AppComponent } from './app.component';
+import { PokemonService } from './services/pokemon.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PokemonService
   ],
   providers: [],
   bootstrap: [AppComponent]
