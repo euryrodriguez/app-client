@@ -5,6 +5,8 @@ import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { FavoriteListComponent } from './favorite-list/favorite-list.component';
 import { AppComponent } from './app.component';
 import { PokemonService } from './services/pokemon.service';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -15,9 +17,12 @@ import { PokemonService } from './services/pokemon.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    NgxPaginationModule
+  ],
+  providers: [
     PokemonService
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

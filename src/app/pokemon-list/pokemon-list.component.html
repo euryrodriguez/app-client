@@ -17,47 +17,32 @@
         </div>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-4 mb-2" *ngFor="let limit of limitsArray">
-                    <div class="box border p-2">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="img-container">
-                                    <img src="https://picsum.photos/id/237/200/300" 
-                                    width="100" 
-                                    class="text-center" >
-                                </div>
+                <div class="col-md-4 mb-2" 
+                *ngFor="let pokemon of pokemons | paginate: { itemsPerPage: 9, currentPage: currentPage, totalItems: totalRecords  }">
+                <div class="box border p-2">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="img-container">
+                                <img [src]="pokemon.sprites.front_default" alt="pokemon" 
+                                width="100" 
+                                class="text-center" >
                             </div>
-                            <div class="col-md-7">
-                                <br>
-                                <p class="font-weight-bold">Pikachu</p>
-                                <button type="button" class="btn btn-outline-success">+ Agregar a favoritos</button>
-                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <br>
+                            <p class="font-weight-bold">{{ pokemon.name }}</p>
+                            <button type="button" (click)="addPokemonToFavorite()" data-name="{{ pokemon.name }}" class="btn btn-outline-success">
+                                + Agregar a favoritos
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 text-center">
-            <br>
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-        </div>
     </div>
+    <div class="col-md-12 text-center">
+        <br>
+        <pagination-controls (pageChange)="currentPage = $event; pokemons = []; getPokemons()" class="justify-content-center text-ceter"></pagination-controls>
+    </div>
+</div>
 </div>
