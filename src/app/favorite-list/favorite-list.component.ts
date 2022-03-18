@@ -13,20 +13,26 @@ export class FavoriteListComponent implements OnInit {
   
   ngOnInit(): void {
     this.initJQueryDatatable();
+    this.onClickEditPokemon();
   }
   initJQueryDatatable(){
     let listId = '#list';
     $(listId).DataTable().destroy();
     this.getDataInSessionStorage().then((data:any)=>{
+      let i = 0;
       $(listId).DataTable( {
         data: data,
         columns: [
+          { data: (data)=>{
+            i++;
+            return i;
+          } },
           { data: 'name' },
           { data: 'alias' },
           { data: 'createdAt' },
           { data:  (data) => {
             return `
-            <a href="#" class="btn btn-warning text-white editGrade"
+            <a href="#" class="btn btn-warning text-white editPokemon"
             data-toggle="tooltip" data-name="${data.name}"
             data-placement="top" title="Editar">
             <i class="fas fa-edit"></i>
@@ -34,7 +40,7 @@ export class FavoriteListComponent implements OnInit {
             <a href="#"
             data-title="el grado" data-name="${data.name}"
             data-toggle="tooltip" data-placement="top" title="Eliminar"
-            class="btn btn-danger deleteGrade">
+            class="btn btn-danger deletePokemon">
             <i class="fas fa-trash-alt"></i>
             </a>
             `;
@@ -44,24 +50,32 @@ export class FavoriteListComponent implements OnInit {
         }
       ]
     } );
-    });
-  }
-  getDataInSessionStorage(){
-    return new Promise((resolve)=>{
-      let favorites = sessionStorage.getItem('favorites');
-      if(favorites == null){
-        resolve([]);
-      }else{
-        let data:any[] = [];
-        let arrOfFavorites = JSON.parse(favorites);
-        arrOfFavorites.forEach(function(item:any){
-          let values = Object.values(item);
-          if(values.length>0){
-            data.push(values[0]);
-          }
-        })
-        resolve(data);
-      }
-    });
-  }
+  });
+}
+getDataInSessionStorage(){
+  return new Promise((resolve)=>{
+    let favorites = sessionStorage.getItem('favorites');
+    if(favorites == null){
+      resolve([]);
+    }else{
+      let data:any[] = [];
+      let arrOfFavorites = JSON.parse(favorites);
+      arrOfFavorites.forEach(function(item:any){
+        let values = Object.values(item);
+        if(values.length>0){
+          data.push(values[0]);
+        }
+      })
+      resolve(data);
+    }
+  });
+}
+onClickEditPokemon(){
+  $(document).on('click', '.editPokemon', function(e){
+    e.preventDefault();
+    const $selector = $(this);
+    const dataName = $selector.data('name');
+    console.log(dataName);
+  });
+}
 }
