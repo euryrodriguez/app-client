@@ -15,6 +15,7 @@ export class FavoriteListComponent implements OnInit {
     this.initJQueryDatatable();
     this.onClickEditPokemon();
   }
+  
   initJQueryDatatable(){
     let listId = '#list';
     $(listId).DataTable().destroy();
@@ -74,8 +75,9 @@ onClickEditPokemon(){
   $(document).on('click', '.editPokemon', function(e){
     e.preventDefault();
     const $selector = $(this);
+    const $modalEdit = $('#modal-edit');
     const dataName = $selector.data('name');
-    console.log(dataName);
+    (<any>$modalEdit).modal('show');
   });
 }
 }
