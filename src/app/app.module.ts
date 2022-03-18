@@ -10,6 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HeaderComponent } from './header/header.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ModalComponent } from './modal/modal.component';
+import { FavoriteService } from './services/favorite.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ModalComponent } from './modal/modal.component';
     DataTablesModule
   ],
   providers: [
-    PokemonService
+    PokemonService,
+    FavoriteService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Favorite } from '../models/Favorite';
+import { FavoriteService } from '../services/favorite.service';
 
 @Component({
   selector: 'app-favorite-list',
@@ -7,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteListComponent implements OnInit {
   
-  constructor() { 
-    
-  }
+  constructor(private favoriteService: FavoriteService) { }
   
   ngOnInit(): void {
     this.initJQueryDatatable();
@@ -19,7 +19,7 @@ export class FavoriteListComponent implements OnInit {
   initJQueryDatatable(){
     let listId = '#list';
     $(listId).DataTable().destroy();
-    this.getDataInSessionStorage().then((data:any)=>{
+    this.favoriteService.getDataInSessionStorage().then((data:any)=>{
       let i = 0;
       $(listId).DataTable( {
         data: data,
@@ -38,12 +38,6 @@ export class FavoriteListComponent implements OnInit {
             data-placement="top" title="Editar">
             <i class="fas fa-edit"></i>
             </a>
-            <a href="#"
-            data-title="el grado" data-name="${data.name}"
-            data-toggle="tooltip" data-placement="top" title="Eliminar"
-            class="btn btn-danger deletePokemon">
-            <i class="fas fa-trash-alt"></i>
-            </a>
             `;
           },
           "width": "15%",
@@ -53,30 +47,28 @@ export class FavoriteListComponent implements OnInit {
     } );
   });
 }
-getDataInSessionStorage(){
-  return new Promise((resolve)=>{
-    let favorites = sessionStorage.getItem('favorites');
-    if(favorites == null){
-      resolve([]);
-    }else{
-      let data:any[] = [];
-      let arrOfFavorites = JSON.parse(favorites);
-      arrOfFavorites.forEach(function(item:any){
-        let values = Object.values(item);
-        if(values.length>0){
-          data.push(values[0]);
-        }
-      })
-      resolve(data);
-    }
-  });
-}
+
 onClickEditPokemon(){
+  const selfClass = this;
   $(document).on('click', '.editPokemon', function(e){
     e.preventDefault();
     const $selector = $(this);
     const $modalEdit = $('#modal-edit');
+    const $name = $modalEdit.find('#name');
+    const $alias = $modalEdit.find('#alias');
+    const $createdAt = $modalEdit.find('#createdAt');
     const dataName = $selector.data('name');
+    let favorites = selfClass.favoriteService.getDataInSessionStorage();
+    favorites.then((data:any)=>{
+      data.forEach(function(item:Favorite){
+        if(item.name == dataName){
+          $name.val(item.name);
+          $alias.val(item.alias);
+          $createdAt.val(item.createdAt.toString());
+          return;
+        }
+      });
+    });
     (<any>$modalEdit).modal('show');
   });
 }
